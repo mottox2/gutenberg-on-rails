@@ -3,12 +3,29 @@
   <head>
     <title>GutenbergOnRails</title>
     <%= csrf_meta_tags %>
+    <script>
+      window._wpDateSettings = {"l10n":{"locale":"ja","months":["1\u6708","2\u6708","3\u6708","4\u6708","5\u6708","6\u6708","7\u6708","8\u6708","9\u6708","10\u6708","11\u6708","12\u6708"],"monthsShort":["1\u6708","2\u6708","3\u6708","4\u6708","5\u6708","6\u6708","7\u6708","8\u6708","9\u6708","10\u6708","11\u6708","12\u6708"],"weekdays":["\u65e5\u66dc\u65e5","\u6708\u66dc\u65e5","\u706b\u66dc\u65e5","\u6c34\u66dc\u65e5","\u6728\u66dc\u65e5","\u91d1\u66dc\u65e5","\u571f\u66dc\u65e5"],"weekdaysShort":["\u65e5","\u6708","\u706b","\u6c34","\u6728","\u91d1","\u571f"],"meridiem":{"am":"am","pm":"pm","AM":"AM","PM":"PM"},"relative":{"future":"%s\u5f8c","past":"%s\u524d"}},"formats":{"time":"g:i A","date":"Y\u5e74n\u6708j\u65e5","datetime":"Y\u5e74n\u6708j\u65e5 g:i A"},"timezone":{"offset":9,"string":"Asia\/Tokyo"}}
+      var userSettings = {"url":"\/","uid":"1","time":"1519489646","secure":""};var wpApiSettings = {"root":"http:\/\/localhost:9004\/index.php?rest_route=\/","nonce":"0d5be4c0c5","versionString":"wp\/v2\/"};var postBoxL10n = {"postBoxEmptyString":"\u30dc\u30c3\u30af\u30b9\u3092\u3053\u3053\u306b\u30c9\u30e9\u30c3\u30b0"};/* ]]> */
+    </script>
+
+    <link rel='stylesheet' id='wp-blocks-css'  href='http://localhost:9004/wp-content/plugins/gutenberg/blocks/build/style.css?ver=1519489634' type='text/css' media='all' />
+    <link rel='stylesheet' id='wp-components-css'  href='http://localhost:9004/wp-content/plugins/gutenberg/components/build/style.css?ver=1519489634' type='text/css' media='all' />
+    <link rel='stylesheet' id='wp-edit-blocks-css'  href='http://localhost:9004/wp-content/plugins/gutenberg/blocks/build/edit-blocks.css?ver=1519489634' type='text/css' media='all' />
+    <link rel='stylesheet' id='wp-editor-css'  href='http://localhost:9004/wp-content/plugins/gutenberg/editor/build/style.css?ver=1519489634' type='text/css' media='all' />
+    <link rel='stylesheet' id='wp-edit-post-css'  href='http://localhost:9004/wp-content/plugins/gutenberg/edit-post/build/style.css?ver=1519489634' type='text/css' media='all' />
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'wordpress/index', 'gutenberg/index', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
     <%= yield %>
+    <script>
+      window._wpLoadGutenbergEditor = wp.api.init().then( function() {
+        wp.blocks.registerCoreBlocks();
+        return wp.editPost.initializeEditor( 'editor', window._wpGutenbergPost, editorSettings );
+      })
+      window._wpLoadGutenbergEditor.then( function( editor ) { console.log(editor);editor.initializeMetaBoxes( {"normal":false,"advanced":false,"side":false} ) } );
+    </script>
   </body>
 </html>
